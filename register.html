@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Đăng ký tài khoản</h1>
+    <form method="POST">
+        <label for="username">Tên người dùng:</label>
+        <input type="text" name="username" required>
+        <label for="password">Mật khẩu:</label>
+        <input type="password" name="password" required>
+        <button type="submit">Đăng ký</button>
+    </form>
+    <p>Đã có tài khoản? <a href="{{ url_for('login') }}">Đăng nhập</a></p>
+</body>
+</html>

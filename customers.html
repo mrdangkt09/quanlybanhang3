@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Khách hàng</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Màu nền nhẹ */
+        }
+        nav {
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #343a40; /* Màu tiêu đề */
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .customer-form-section,
+        .customer-list-section {
+            background-color: #ffffff; /* Nền trắng cho các phần */
+            border-radius: 8px; /* Bo tròn góc */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+            padding: 20px; /* Đệm cho các phần */
+            margin-bottom: 30px; /* Khoảng cách giữa các phần */
+        }
+        .customer-table {
+            margin-top: 20px;
+        }
+        .btn {
+            margin: 0 5px; /* Khoảng cách giữa các nút */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{ url_for('index') }}">Quản lý Khách hàng</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('products') }}">Sản phẩm</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('invoices') }}">Hóa đơn</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('cart') }}">Giỏ hàng</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                {% if 'username' in session %}
+                <li class="nav-item">
+                    <span class="navbar-text">Xin chào, {{ session['username'] }}</span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('logout') }}">Đăng xuất ({{ session['username'] }})</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('login') }}">Đăng nhập</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('signup') }}">Đăng ký</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+        <section class="customer-form-section">
+            <h2>Thêm Khách hàng mới</h2>
+            <form method="POST" class="customer-form">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="name" placeholder="Tên khách hàng" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="phone" placeholder="Số điện thoại" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="address" placeholder="Địa chỉ" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Thêm khách hàng</button> <!-- Nút toàn bộ chiều rộng -->
+            </form>
+        </section>
+
+        <section class="customer-list-section">
+            <h2>Danh sách khách hàng</h2>
+            <table class="customer-table table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên khách hàng</th>
+                        <th>Số điện thoại</th>
+                        <th>Địa chỉ</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for customer in customers %}
+                    <tr>
+                        <td>{{ customer.id }}</td>
+                        <td>{{ customer.name }}</td>
+                        <td>{{ customer.phone }}</td>
+                        <td>{{ customer.address }}</td>
+                        <td>
+                            <a href="{{ url_for('edit_customer', id=customer.id) }}" class="btn btn-warning btn-sm">Sửa</a>
+                            <a href="{{ url_for('delete_customer', id=customer.id) }}" class="btn btn-danger btn-sm">Xóa</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

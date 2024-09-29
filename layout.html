@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Hệ thống quản lý bán hàng</title>
+    <!-- Sử dụng Bootstrap 4.5.2 cho các thành phần giao diện -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Tạo màu nền nhẹ nhàng và hiện đại */
+        body {
+            background-color: #f5f7fa;
+            font-family: 'Arial', sans-serif;
+            padding-bottom: 40px;
+        }
+        /* Header với màu sắc nổi bật và văn bản căn giữa */
+        .header {
+            background: linear-gradient(135deg, #007bff, #6c757d);
+            color: #ffffff;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        /* Tạo sự mềm mại cho liên kết trong navbar */
+        nav a {
+            color: #ffffff;
+            margin: 0 20px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 14px;
+        }
+        /* Tạo hiệu ứng hover nhẹ cho liên kết */
+        nav a:hover {
+            text-decoration: underline;
+        }
+        /* Hiệu ứng bo góc và đổ bóng cho flash messages */
+        .flash-message {
+            margin-top: 20px;
+        }
+        .alert {
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        /* Style cho footer */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px 0;
+            background-color: #343a40;
+            color: #ffffff;
+            border-radius: 10px;
+        }
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+        /* Tăng khoảng cách giữa các section */
+        hr {
+            border: 0;
+            height: 1px;
+            background: #007bff;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Container chính của trang -->
+    <div class="container">
+        <!-- Header với tiêu đề nổi bật -->
+        <div class="header">
+            <h1>Hệ thống quản lý bán hàng</h1>
+        </div>
+        
+        <!-- Navbar cho các liên kết quản lý -->
+        <nav class="text-center">
+            <a href="{{ url_for('manage_products') }}">Quản lý sản phẩm</a> |
+            <a href="{{ url_for('manage_customers') }}">Quản lý khách hàng</a> |
+            <a href="{{ url_for('manage_invoices') }}">Quản lý hóa đơn</a>
+        </nav>
+
+        <!-- Đường kẻ phân cách -->
+        <hr>
+
+        <!-- Hiển thị flash messages -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-success flash-message">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Nội dung động (sử dụng block content trong Flask) -->
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer cho trang -->
+    <footer>
+        <p>&copy; 2024 - Nguyễn Minh Đăng. Tất cả các quyền được bảo lưu.</p>
+    </footer>
+
+    <!-- Thêm các thư viện JavaScript cần thiết -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Màu nền sáng hơn */
+            font-family: 'Arial', sans-serif; /* Chọn phông chữ */
+            overflow-x: hidden; /* Ngăn cuộn ngang */
+        }
+        nav {
+            margin-bottom: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.5s;
+        }
+        nav:hover {
+            background-color: #f1f1f1; /* Hiệu ứng đổi màu nền khi hover */
+        }
+        nav .nav-link {
+            color: #007bff;
+            transition: color 0.3s; /* Hiệu ứng chuyển màu khi hover */
+            font-weight: 500; /* Chữ đậm hơn */
+        }
+        nav .nav-link:hover {
+            color: #0056b3; /* Màu chữ khi hover */
+        }
+        h1 {
+            font-size: 2.8rem;
+            color: #343a40;
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            text-transform: uppercase; /* Chữ in hoa */
+        }
+        p {
+            font-size: 1.2rem;
+            text-align: center;
+            color: #495057;
+            margin-bottom: 30px;
+        }
+        .welcome-section {
+            background-color: #ffffff;
+            border-radius: 15px; /* Bo tròn góc nhiều hơn */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px; /* Đệm cho phần */
+            margin: 0 auto;
+            max-width: 800px; /* Chiều rộng tối đa */
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .welcome-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Tăng độ bóng khi hover */
+        }
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.9rem; /* Kích thước chữ nhỏ hơn */
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            border-radius: 25px; /* Bo tròn nút nhiều hơn */
+            transition: background-color 0.3s, transform 0.3s;
+            padding: 10px 30px; /* Đệm cho nút */
+            margin: 10px; /* Khoảng cách giữa các nút */
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+            transform: scale(1.05); /* Phóng to nút khi hover */
+        }
+        .hero-image {
+            height: 400px; /* Chiều cao của hình ảnh */
+            background-image: url('{{ url_for('static', filename='quanlybanhang.jpg') }}'); /* Đặt hình ảnh từ thư mục static */
+            background-size: cover; /* Đảm bảo ảnh bao phủ toàn bộ khung */
+            background-position: center; /* Căn giữa ảnh trong khung */
+            border-radius: 15px; 
+            margin-bottom: 20px; 
+            position: relative; 
+            overflow: hidden; /* Ngăn hình ảnh lòi ra ngoài khung */
+        }
+        .hero-image::after {
+            content: ""; 
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5); /* Lớp phủ màu đen */
+            border-radius: 15px; 
+        }
+        .hero-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); 
+            color: #ffffff; 
+            text-align: center; 
+            font-size: 2rem; /* Kích thước chữ lớn hơn */
+            font-weight: bold; 
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Hiệu ứng đổ bóng cho chữ */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="{{ url_for('index') }}">Quản lý Khách hàng</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('products') }}"><i class="fas fa-box"></i> Sản phẩm</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('customers') }}"><i class="fas fa-users"></i> Khách hàng</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('invoices') }}"><i class="fas fa-file-invoice"></i> Hóa đơn</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('cart') }}"><i class="fas fa-shopping-cart"></i> Giỏ hàng</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('store') }}"><i class="fas fa-store"></i> Cửa hàng</a> <!-- Thêm liên kết đến cửa hàng -->
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                {% if 'username' in session %}
+                <li class="nav-item">
+                    <span class="navbar-text">Xin chào, {{ session['username'] }}</span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('logout') }}">Đăng xuất</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('login') }}">Đăng nhập</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('signup') }}">Đăng ký</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="hero-image">
+        <div class="hero-text">Khám Phá Các Sản Phẩm Tốt Nhất</div>
+    </div>
+
+    <div class="welcome-section">
+        <h1>Chào mừng đến với Quản lý Khách hàng!</h1>
+        <p>Vui lòng chọn một trong các liên kết trên để bắt đầu.</p>
+        <div class="d-flex justify-content-center">
+            <a href="{{ url_for('products') }}" class="btn btn-custom">Xem Sản phẩm</a>
+            <a href="{{ url_for('customers') }}" class="btn btn-custom">Xem Khách hàng</a>
+            <a href="{{ url_for('invoices') }}" class="btn btn-custom">Xem Hóa đơn</a>
+            <a href="{{ url_for('cart') }}" class="btn btn-custom">Giỏ hàng</a>
+            <a href="{{ url_for('store') }}" class="btn btn-custom">Đến Cửa hàng</a> <!-- Thêm nút đến cửa hàng -->
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Copyright: Nguyễn Minh Đăng.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

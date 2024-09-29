@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý sản phẩm</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{ url_for('index') }}">Quản lý Khách hàng</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('customers') }}">Khách hàng</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('invoices') }}">Hóa đơn</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('cart') }}">Giỏ hàng</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                {% if 'username' in session %}
+                <li class="nav-item">
+                    <span class="navbar-text">Xin chào, {{ session['username'] }}</span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('logout') }}">Đăng xuất</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('login') }}">Đăng nhập</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('signup') }}">Đăng ký</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+        <h2>Danh sách sản phẩm</h2>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-info">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" enctype="multipart/form-data" class="mb-4">
+            <div class="form-group">
+                <label for="name">Tên sản phẩm:</label>
+                <input type="text" name="name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="category">Danh mục:</label>
+                <input type="text" name="category" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="price">Giá:</label>
+                <input type="number" name="price" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="quantity">Số lượng:</label>
+                <input type="number" name="quantity" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="image">Hình ảnh sản phẩm:</label>
+                <input type="file" name="image" class="form-control-file" accept=".jpg, .jpeg" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
+        </form>
+
+        {% if products %}
+            <div class="row">
+                {% for product in products %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="{{ product.image_url or url_for('static', filename='default_image.jpg') }}" alt="{{ product.name }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p class="card-text">Danh mục: {{ product.category }}</p>
+                                <p class="card-text">Giá: {{ product.price }} VNĐ</p>
+                                <p class="card-text">Số lượng: {{ product.quantity }}</p>
+                                <div class="d-flex justify-content-between">
+                                    <a href="{{ url_for('edit_product', id=product.id) }}" class="btn btn-warning">Chỉnh sửa</a>
+                                    <form method="POST" action="{{ url_for('delete_product', id=product.id) }}" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger">Xóa</button>
+                                    </form>
+                                    <form method="POST" action="{{ url_for('add_to_cart', product_id=product.id) }}" style="display:inline;">
+                                        <div class="input-group" style="width: 120px;">
+                                            <input type="number" name="quantity" value="1" min="1" class="form-control">
+                                            <div class="input-group-append">
+                                                <button type="submit" class="btn btn-success">Thêm</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Không có sản phẩm nào trong danh sách.</p>
+        {% endif %}
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

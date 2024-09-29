@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý hóa đơn</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4">Quản lý hóa đơn</h1>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="alert alert-warning">
+              <ul>
+                {% for message in messages %}
+                  <li>{{ message }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST" class="mb-4">
+            <h2>Tạo hóa đơn mới</h2>
+            <div class="form-group">
+                <label for="customer_name">Tên khách hàng:</label>
+                <input type="text" name="customer_name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="total_price">Tổng giá:</label>
+                <input type="number" name="total_price" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="date">Ngày:</label>
+                <input type="date" name="date" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Tạo hóa đơn</button>
+        </form>
+
+        <h2>Danh sách hóa đơn</h2>
+        <ul class="list-group">
+            {% for invoice in invoices %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ invoice.customer_name }} - {{ invoice.total_price }} VNĐ - {{ invoice.date }}
+                    <form action="{{ url_for('delete_invoice', id=invoice.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

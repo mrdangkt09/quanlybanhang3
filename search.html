@@ -1,0 +1,14 @@
+<h2>Kết quả tìm kiếm</h2>
+<div class="search-results">
+    {% if search_results %}
+        <ul>
+            {% for result in search_results %}
+                <li class="result-item">
+                    <span class="result-name">{{ result.name }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="no-results">Không tìm thấy kết quả.</div>
+    {% endif %}
+</div>

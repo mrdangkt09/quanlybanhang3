@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Báo cáo Tổng quan</h2>
+
+<div class="report-summary">
+    <h3>Tổng doanh thu:</h3>
+    <p class="revenue">{{ total_revenue }} VND</p>
+    
+    <h3>Tổng số hóa đơn:</h3>
+    <p class="invoices">{{ total_invoices }}</p>
+    
+    <h3>Tổng số sản phẩm đã bán:</h3>
+    <p class="products-sold">{{ total_products_sold }}</p>
+</div>
+
+<div class="charts">
+    <h3>Biểu đồ Doanh thu</h3>
+    <canvas id="revenueChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('revenueChart').getContext('2d');
+    const revenueChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Doanh thu'],
+            datasets: [{
+                label: 'Doanh thu',
+                data: [{{ total_revenue }}],
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+{% endblock %}

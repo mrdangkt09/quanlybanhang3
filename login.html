@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f0f2f5; /* Màu nền nhẹ */
+        }
+        .login-container {
+            max-width: 400px; /* Chiều rộng tối đa cho khung đăng nhập */
+            margin: auto; /* Giữa trang */
+            background-color: #ffffff; /* Nền trắng */
+            border-radius: 8px; /* Bo tròn góc */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+            padding: 30px; /* Đệm cho nội dung */
+            margin-top: 100px; /* Khoảng cách từ trên xuống */
+        }
+        h2 {
+            text-align: center; /* Căn giữa tiêu đề */
+            color: #343a40; /* Màu tiêu đề */
+            margin-bottom: 20px; /* Khoảng cách dưới tiêu đề */
+        }
+        .btn-link {
+            display: block; /* Đặt liên kết thành một khối */
+            text-align: center; /* Căn giữa liên kết */
+            margin-top: 10px; /* Khoảng cách trên */
+        }
+        .alert {
+            margin-bottom: 20px; /* Khoảng cách dưới cảnh báo */
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Đăng nhập</h2>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="alert alert-warning">
+              {% for message in messages %}
+                <p>{{ message }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+        <form method="POST">
+            <div class="form-group">
+                <label for="username">Tên người dùng</label>
+                <input type="text" class="form-control" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mật khẩu</label>
+                <input type="password" class="form-control" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button> <!-- Nút toàn bộ chiều rộng -->
+            <a href="{{ url_for('signup') }}" class="btn btn-link">Chưa có tài khoản? Đăng ký</a>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
